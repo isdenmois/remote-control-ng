@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/isdenmois/remote-control/parser"
 	"github.com/isdenmois/remote-control/server"
 	"time"
 )
@@ -10,7 +9,7 @@ import (
 func main() {
 	fmt.Println("Start parse files")
 	start := time.Now()
-	films := parser.Parse()
+	films := server.Parse()
 	elapsed := time.Since(start)
 
 	fmt.Printf("Parse time: %s\nStarting server on :9090", elapsed)

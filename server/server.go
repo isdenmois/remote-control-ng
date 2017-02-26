@@ -1,12 +1,11 @@
 package server
 
 import (
-	"github.com/isdenmois/remote-control/parser"
 	// "github.com/gorilla/mux"
 	"net/http"
 )
 
-func Start(films []parser.Film) {
+func Start(films []Film) {
 	// router := mux.NewRouter()
 	filmsHandler := FilmsHandler{Films: films}
   	fs := http.FileServer(http.Dir("static"))

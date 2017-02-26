@@ -3,12 +3,11 @@ package server
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/isdenmois/remote-control/parser"
 	"net/http"
 )
 
 type FilmsHandler struct {
-	Films []parser.Film
+	Films []Film
 }
 
 func (h *FilmsHandler) Register(router *mux.Router) {
