@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.films,
+.control {
+    align-items: center;
+    display: flex;
+    font-size: 48px;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
