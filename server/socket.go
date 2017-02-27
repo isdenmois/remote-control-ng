@@ -54,8 +54,12 @@ func (s SocketIOServer) handleKeyboard(keyList string) {
 
     var keys KeyboardMessage
     json.Unmarshal([]byte(keyList), &keys)
-    log.Println("parsed: ", keys)
-    robotgo.KeyTap(keys.Key, keys.Modifiers)
+
+    if len(keys.Modifiers) > 0 {
+        robotgo.KeyTap(keys.Key, keys.Modifiers)
+    } else {
+        robotgo.KeyTap(keys.Key)
+    }
 }
 
 func (SocketIOServer) handleError(so socketio.Socket, err error) {
