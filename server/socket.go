@@ -4,19 +4,28 @@ import (
     "log"
     "github.com/googollee/go-socket.io"
     "github.com/go-vgo/robotgo"
-    "encoding/json"
+	"github.com/pquerna/ffjson/ffjson"
 )
 
+/**
+ * Structure for socket io handler.
+ */
 type SocketIOServer struct {
     Handler      *socketio.Server
 	Films       []Film
 }
 
-type KeyboardMessage struct {
-    Key         string      `json:key`
-    Modifiers   []string    `json:modifiers`
+/**
+ * Structure for parse json.
+ */
+type keyboardMessage struct {
+    Key         string
+    Modifiers   []string
 }
 
+/**
+ * Subscribing to socket io messages.
+ */
 func (s *SocketIOServer) Subscribe() *socketio.Server {
     if (s.Handler != nil) {
         return s.Handler;
@@ -52,8 +61,8 @@ func (s SocketIOServer) handleConnection(so socketio.Socket) {
 func (s SocketIOServer) handleKeyboard(keyList string) {
     log.Println("on keyboard: ", keyList)
 
-    var keys KeyboardMessage
-    json.Unmarshal([]byte(keyList), &keys)
+    var keys keyboardMessage
+    ffjson.Unmarshal([]byte(keyList), &keys)
 
     if len(keys.Modifiers) > 0 {
         robotgo.KeyTap(keys.Key, keys.Modifiers)

@@ -1,7 +1,7 @@
 package server
 
 import (
-	"encoding/json"
+	"github.com/pquerna/ffjson/ffjson"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -31,12 +31,12 @@ func request(url string, result interface{}) {
 	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
-	json.Unmarshal([]byte(body), &result)
+	ffjson.Unmarshal([]byte(body), &result)
 }
 
-func Parse() []Film {
+func Parse(api string, category string) []Film {
 	var result []torrentItem
-	request("http://127.0.0.1:3310/query/torrents?category="+url.QueryEscape("Фильмы"), &result)
+	request(api + "/query/torrents?category="+url.QueryEscape(category), &result)
 
 	var films []Film
 	for _, item := range result {
@@ -46,7 +46,7 @@ func Parse() []Film {
 		film.Path = item.Save_path
 
 		var files []File
-		request("http://127.0.0.1:3310/query/propertiesFiles/"+film.Hash, &files)
+		request(api + "/query/propertiesFiles/"+film.Hash, &files)
 
 		for _, fileItem := range files {
 			if !strings.Contains(fileItem.Name, "unwanted") {
