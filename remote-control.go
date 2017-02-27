@@ -11,6 +11,7 @@ import (
 type serverConfig struct {
 	Qbittorrent   string
 	FilmsCategory string
+	SerialsCategory	string
 }
 
 func parseConfig() serverConfig {
@@ -31,7 +32,8 @@ func main() {
 
 	config := parseConfig()
 	films := server.Parse(config.Qbittorrent, config.FilmsCategory)
+	serials := server.Parse(config.Qbittorrent, config.SerialsCategory)
 
 	log.Printf("Starting server on :9090")
-	server.Start(films)
+	server.Start(films, serials)
 }

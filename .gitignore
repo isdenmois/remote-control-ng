@@ -2,3 +2,5 @@
 node_modules/
 remote-control
 npm-debug.log
+static/bundle.js
+static/main.css

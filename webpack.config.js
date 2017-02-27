@@ -43,7 +43,14 @@ module.exports = {
         // match the output `publicPath`
 
         //fallback to root for other urls
-        historyApiFallback: true
+        historyApiFallback: true,
+
+        proxy: {
+            '/socket.io/*': {
+                target: 'ws://localhost:9090',
+                ws: true,
+            },
+        },
     },
 
     module: {

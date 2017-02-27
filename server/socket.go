@@ -4,6 +4,7 @@ import (
 	"github.com/go-vgo/robotgo"
 	"github.com/googollee/go-socket.io"
 	"github.com/pquerna/ffjson/ffjson"
+	"github.com/skratchdot/open-golang/open"
 	"log"
 )
 
@@ -13,6 +14,7 @@ import (
 type SocketIOServer struct {
 	Handler *socketio.Server
 	Films   []Film
+	Serials []Film
 }
 
 /**
@@ -46,10 +48,20 @@ func (s *SocketIOServer) Subscribe() *socketio.Server {
 func (s SocketIOServer) handleConnection(so socketio.Socket) {
 	log.Println("on connection")
 
-	so.On("films_get", func(msg string) {
-		log.Println("on films_get")
-		so.Emit("films_send", s.Films)
+	so.On("films", func(msg string) {
+		log.Println("on films")
+		so.Emit("films", s.Films)
 	})
+
+	so.On("serials", func(msg string) {
+		log.Println("on serials")
+		so.Emit("serials", s.Serials)
+	})
+
+	so.On("open", func(path string) {
+		log.Println("on open")
+		open.Start(path)
+	});
 
 	so.On("keyboard", s.handleKeyboard)
 
