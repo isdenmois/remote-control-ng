@@ -1,29 +1,29 @@
 package main
 
 import (
-	"os"
-	"log"
-	"io/ioutil"
 	"github.com/isdenmois/remote-control/server"
 	"github.com/pquerna/ffjson/ffjson"
+	"io/ioutil"
+	"log"
+	"os"
 )
 
 type serverConfig struct {
-	Qbittorrent		string
-	FilmsCategory	string
+	Qbittorrent   string
+	FilmsCategory string
 }
 
 func parseConfig() serverConfig {
 	file, e := ioutil.ReadFile("./config.json")
-    if e != nil {
-        log.Fatalln("Config read error: %v", e)
-        os.Exit(1)
-    }
+	if e != nil {
+		log.Fatalln("Config read error: %v", e)
+		os.Exit(1)
+	}
 
 	var config serverConfig
 	ffjson.Unmarshal(file, &config)
 
-	return config;
+	return config
 }
 
 func main() {

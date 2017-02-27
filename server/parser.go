@@ -36,7 +36,7 @@ func request(url string, result interface{}) {
 
 func Parse(api string, category string) []Film {
 	var result []torrentItem
-	request(api + "/query/torrents?category="+url.QueryEscape(category), &result)
+	request(api+"/query/torrents?category="+url.QueryEscape(category), &result)
 
 	var films []Film
 	for _, item := range result {
@@ -46,7 +46,7 @@ func Parse(api string, category string) []Film {
 		film.Path = item.Save_path
 
 		var files []File
-		request(api + "/query/propertiesFiles/"+film.Hash, &files)
+		request(api+"/query/propertiesFiles/"+film.Hash, &files)
 
 		for _, fileItem := range files {
 			if !strings.Contains(fileItem.Name, "unwanted") {
